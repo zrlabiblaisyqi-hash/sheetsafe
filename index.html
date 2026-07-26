@@ -36,6 +36,11 @@
   body::after{width:48vw;height:48vw;right:-12vw;bottom:-18vw;
     background:radial-gradient(circle, rgba(122,240,208,.32), transparent 65%);
     animation:drift2 26s ease-in-out infinite alternate;}
+
+  /* cinematic 3D cursor trail */
+  #trail{position:fixed;inset:0;width:100vw;height:100vh;z-index:1;pointer-events:none;
+    mix-blend-mode:screen;opacity:.9}
+  .wrap{position:relative;z-index:2}
   @keyframes drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(6vw,4vw) scale(1.12)}}
   @keyframes drift2{from{transform:translate(0,0) scale(1.05)}to{transform:translate(-5vw,-3vw) scale(1)}}
 
@@ -158,6 +163,7 @@
 </style>
 </head>
 <body>
+<canvas id="trail"></canvas>
 <div class="wrap">
   <header>
     <div class="brand">
@@ -240,8 +246,8 @@
 
   <div class="cta rise d5">
     <div class="txt">
-      <h4 data-i18n="cta_title">Butuh alat sheet khusus untuk bisnis Anda?</h4>
-      <p data-i18n="cta_body">SheetSafe gratis &amp; privat — dibuat oleh <a href="https://labibcreative.dev" target="_blank" rel="noopener">SUPERSITE</a>, desainer web &amp; data Jakarta. Butuh dashboard, automasi, atau tools data lain? <a href="https://wa.me/6282395440020" target="_blank" rel="noopener">Chat WhatsApp →</a></p>
+      <h4 data-i18n="cta_title">Butuh situs profesional yang benar-benar mengonversi?</h4>
+      <p data-i18n="cta_body">SheetSafe gratis &amp; privat — dibuat oleh <a href="https://labibcreative.dev" target="_blank" rel="noopener">SUPERSITE</a>, desainer web &amp; data Jakarta. Butuh landing page, dashboard, atau tools data yang tampil profesional dan mengubah pengunjung jadi klien? <a href="https://wa.me/6282395440020" target="_blank" rel="noopener">Chat WhatsApp →</a></p>
     </div>
     <a class="wa" href="https://wa.me/6282395440020" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.13c-.24.68-1.42 1.31-1.96 1.36-.5.05-1.14.07-1.84-.12-.42-.13-.97-.32-1.66-.63-2.93-1.27-4.83-4.21-4.98-4.41-.15-.2-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .84 2.14.03.14.04.3.01.46-.04.15-.06.24-.12.37-.06.13-.13.28-.37.48-.24.2-.5.36-.72.47-.24.12-.49.25-.21.5.28.24 1.24 2.04 2.67 3.31 1.84 1.62 3.39 2.12 3.88 2.35.49.24.78.2.97-.12.19-.32.82-1.21 1.04-1.63.22-.42.44-.35.75-.21.31.14 1.96.93 2.3 1.1.34.16.56.24.65.37.09.14.09.79-.15 1.47z"/></svg>
@@ -324,8 +330,8 @@ const T = {
     t_prefix:"Awalan teks Excel '",
     s_prot_lbl:'sel terlindungi', s_rows_lbl:'baris diproses', s_warn_lbl:'risiko rusak tertangkap',
     secured:'Data aman',
-    cta_title:'Butuh alat sheet khusus untuk bisnis Anda?',
-    cta_body:'SheetSafe gratis &amp; privat — dibuat oleh <a href="https://labibcreative.dev" target="_blank" rel="noopener">SUPERSITE</a>, desainer web &amp; data Jakarta. Butuh dashboard, automasi, atau tools data lain? <a href="https://wa.me/6282395440020" target="_blank" rel="noopener">Chat WhatsApp →</a>',
+    cta_title:'Butuh situs profesional yang benar-benar mengonversi?',
+    cta_body:'SheetSafe gratis &amp; privat — dibuat oleh <a href="https://labibcreative.dev" target="_blank" rel="noopener">SUPERSITE</a>, desainer web &amp; data Jakarta. Butuh landing page, dashboard, atau tools data yang tampil profesional dan mengubah pengunjung jadi klien? <a href="https://wa.me/6282395440020" target="_blank" rel="noopener">Chat WhatsApp →</a>',
     cta_btn:'Chat di WhatsApp',
     footsig:'Gratis · tanpa iklan · tanpa pelacakan',
     empty:'Tempel data Anda — dan saksikan nilai berisiko dikunci sebagai teks.',
@@ -351,8 +357,8 @@ const T = {
     t_prefix:"Add Excel text-prefix '",
     s_prot_lbl:'cells protected', s_rows_lbl:'rows processed', s_warn_lbl:'corruption risks caught',
     secured:'Data secured',
-    cta_title:'Need a custom sheet tool for your business?',
-    cta_body:'SheetSafe is free &amp; private — built by <a href="https://labibcreative.dev" target="_blank" rel="noopener">SUPERSITE</a>, Jakarta web &amp; data designer. Need a dashboard, automation, or other data tools? <a href="https://wa.me/6282395440020" target="_blank" rel="noopener">Chat on WhatsApp →</a>',
+    cta_title:'Need a professional site that actually converts?',
+    cta_body:'SheetSafe is free &amp; private — built by <a href="https://labibcreative.dev" target="_blank" rel="noopener">SUPERSITE</a>, Jakarta web &amp; data designer. Need a landing page, dashboard, or data tool that looks professional and turns visitors into clients? <a href="https://wa.me/6282395440020" target="_blank" rel="noopener">Chat on WhatsApp →</a>',
     cta_btn:'Chat on WhatsApp',
     footsig:'Free · no ads · no tracking',
     empty:'Paste your data — and watch risky values get locked as text.',
@@ -409,7 +415,8 @@ function run(){
   $("s_rows").textContent = p.rowCount;
   $("s_warn").textContent = p.caught;
 }
-[inp, "t_zero","t_long","t_date","t_prefix"].forEach(id => {
+inp.addEventListener("input", run);
+["t_zero","t_long","t_date","t_prefix"].forEach(id => {
   $(id).addEventListener("input", run); $(id).addEventListener("change", run);
 });
 
@@ -438,6 +445,86 @@ run();
 
 // invisible hit counter (no visible badge) — analytics only
 fetch("https://hits.sh/github.com/zrlabiblaisyqi-hash/sheetsafe.svg", {mode:"no-cors"}).catch(()=>{});
+
+// ---- Cinematic 3D cursor trail (eased lag, depth-ribbon) ----
+(function(){
+  const cv = document.getElementById('trail');
+  const ctx = cv.getContext('2d');
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let W, H;
+  function resize(){
+    W = cv.width = Math.floor(innerWidth * dpr);
+    H = cv.height = Math.floor(innerHeight * dpr);
+    cv.style.width = innerWidth + 'px';
+    cv.style.height = innerHeight + 'px';
+  }
+  resize(); addEventListener('resize', resize);
+
+  const target = { x: innerWidth/2*dpr, y: innerHeight/2*dpr };
+  const head = { x: target.x, y: target.y };
+  const pts = [];
+  const MAX = 26;
+  let visible = 0;
+
+  function onMove(e){
+    const t = e.touches ? e.touches[0] : e;
+    target.x = t.clientX * dpr;
+    target.y = t.clientY * dpr;
+    visible = 1;
+  }
+  addEventListener('mousemove', onMove, {passive:true});
+  addEventListener('touchmove', onMove, {passive:true});
+  addEventListener('mouseleave', ()=>{ visible = 0; });
+
+  let t = 0;
+  function frame(){
+    t += 0.016;
+    head.x += (target.x - head.x) * 0.12;
+    head.y += (target.y - head.y) * 0.12;
+    if (!visible){
+      target.x = (innerWidth/2 + Math.cos(t*0.6)*innerWidth*0.18) * dpr;
+      target.y = (innerHeight/2 + Math.sin(t*0.8)*innerHeight*0.14) * dpr;
+    }
+    pts.push({ x: head.x, y: head.y });
+    if (pts.length > MAX) pts.shift();
+
+    ctx.clearRect(0,0,W,H);
+    const n = pts.length;
+    for (let i = 1; i < n; i++){
+      const p = pts[i-1], q = pts[i];
+      const k = i / n;
+      const depth = 0.35 + k * 0.65;
+      const w = (1.5 + k * 9) * dpr * depth;
+      const alpha = 0.05 + k * 0.5;
+      const g = ctx.createLinearGradient(p.x, p.y, q.x, q.y);
+      g.addColorStop(0, 'rgba(91,140,255,' + (alpha*0.7).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(122,240,208,' + alpha.toFixed(3) + ')');
+      ctx.strokeStyle = g;
+      ctx.lineWidth = w;
+      ctx.lineCap = 'round';
+      ctx.shadowBlur = (8 + k * 22) * dpr * depth;
+      ctx.shadowColor = 'rgba(122,240,208,' + (alpha*0.6).toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(q.x, q.y);
+      ctx.stroke();
+    }
+    if (n){
+      const q = pts[n-1];
+      const r = 7 * dpr;
+      const rg = ctx.createRadialGradient(q.x - r*0.3, q.y - r*0.3, r*0.1, q.x, q.y, r);
+      rg.addColorStop(0, 'rgba(220,245,255,0.95)');
+      rg.addColorStop(0.5, 'rgba(122,240,208,0.85)');
+      rg.addColorStop(1, 'rgba(91,140,255,0)');
+      ctx.shadowBlur = 26 * dpr; ctx.shadowColor = 'rgba(122,240,208,0.7)';
+      ctx.fillStyle = rg;
+      ctx.beginPath(); ctx.arc(q.x, q.y, r, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
